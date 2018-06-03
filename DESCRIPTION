@@ -1,0 +1,21 @@
+Package: Rtobii
+Type: Package
+Title: Process and Tidy Tobii Eyetracking Data
+Version: 0.1.0
+Author: Kyle MacDonald
+Maintainer: Kyle MacDonald <kylem412@gmail.com>
+Description: The Rtobii package provides a set of utility functions 
+    for working with Tobii eyetracking data in R. Most of
+    these utility functions are designed specificially for the 
+    Language Learning Lab at Stanford.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+    dplyr,
+    XML,
+    readr,
+    magrittr,
+    purrr,
+    tidyselect
+RoxygenNote: 6.0.1
