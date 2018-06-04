@@ -13,7 +13,7 @@
 #' \dontrun{d <- read_tobii(file = "187_Habla2_25_Clips.tsv", tidy = TRUE)}
 
 read_tobii <- function(file, tidy = FALSE, ...) {
-  d <- readr::read_tsv(file = file, ...)
+  d <- readr::read_tsv(file = file,  col_types = cols(), ...)
   if (tidy) {
     d %>%
       clean_tobii_variables() %>%
@@ -56,7 +56,6 @@ make_tobii_trials <- function(df) {
     dplyr::mutate(MediaName = clean_trial_name(MediaName),
                   trial_number = as.integer(stringr::str_extract(MediaName, "[[:digit:]]+")))
 }
-
 
 clean_trial_name <- function(trial_name) {
   trial_name <- stringr::str_replace(trial_name, ".avi", "")

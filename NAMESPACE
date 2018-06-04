@@ -2,6 +2,8 @@
 
 export(read_all_tsvs)
 export(read_all_vcx)
+export(read_order_file)
+export(read_timing_file)
 export(read_tobii)
 export(read_vcx)
 importFrom(dplyr,"%>%")
