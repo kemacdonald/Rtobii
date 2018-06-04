@@ -5,7 +5,7 @@ the Language Learning Lab at Stanford University.
 
 ## Setup
 
-### Install cogsci2016
+### Install Rtobii
 Install `Rtobii` from this GitHub repository:
 
 ```S
