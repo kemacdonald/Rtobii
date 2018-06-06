@@ -4,12 +4,14 @@
 \alias{read_all_tsvs}
 \title{Read And Parse All .tsv Files In Directory}
 \usage{
-read_all_tsvs(dir_path, tidy = FALSE)
+read_all_tsvs(dir_path, tidy = FALSE, y_max = 2048)
 }
 \arguments{
 \item{dir_path}{A path to a directory of .tsv files.}
 
 \item{tidy}{A boolean, if tidy = FALSE this functions behaves just \code{read_tsv()}.}
+
+\item{y_max}{An integer value indicating the largest y-coordinate in the data set. Used to create a}
 }
 \description{
 \code{read_all_tsvs()} reads parses a directory of .vcx coding files to

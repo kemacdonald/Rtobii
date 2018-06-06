@@ -8,7 +8,6 @@
 #' @examples
 #'   d <- read_all_vcx(dir_path = "experiment_name/data/vcx_files/")
 
-
 read_all_vcx <- function(dir_path) {
   files <- dir(path = dir_path,
                pattern = "*.vcx",

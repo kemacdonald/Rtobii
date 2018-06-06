@@ -4,12 +4,15 @@
 \alias{read_tobii}
 \title{Read And Parse Tobii File}
 \usage{
-read_tobii(file, tidy = FALSE, ...)
+read_tobii(file, tidy = FALSE, y_max = 2048, ...)
 }
 \arguments{
 \item{file}{Either a path to a file, a connection, or literal data.}
 
 \item{tidy}{A boolean, if tidy = FALSE this functions behaves just \code{read_tsv()}.}
+
+\item{y_max}{An integer value indicating the largest y-coordinate in the data set. Used to create a
+gaze_y_cartesian column.}
 
 \item{...}{Additional arguments, typically used to control the \code{read_tsv() function}.}
 }

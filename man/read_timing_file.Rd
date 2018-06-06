@@ -9,7 +9,9 @@ read_timing_file(file, tidy = TRUE, fps = 29.97, ...)
 \arguments{
 \item{file}{Either a path to a file, a connection, or literal data.}
 
-\item{tidy}{A boolean, if tidy = FALSE this functions behaves just \code{read_delim()}.}
+\item{tidy}{A boolean, if \code{tidy = FALSE} this functions behaves just \code{read_delim()}.}
+
+\item{fps}{An double indicating the frame rate used when making the timing file.}
 
 \item{...}{Additional arguments, typically used to control the \code{read_tsv() function}.}
 }

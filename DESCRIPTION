@@ -14,8 +14,7 @@ LazyData: true
 Imports:
     dplyr,
     XML,
-    readr,
-    magrittr,
     purrr,
-    tidyselect
+    tidyselect,
+    tidyverse
 RoxygenNote: 6.0.1

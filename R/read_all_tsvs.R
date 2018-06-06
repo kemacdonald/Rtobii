@@ -5,11 +5,12 @@
 #'   to get prescreening information. The
 #' @param dir_path A path to a directory of .tsv files.
 #' @param tidy A boolean, if tidy = FALSE this functions behaves just \code{read_tsv()}.
+#' @param y_max An integer value indicating the largest y-coordinate in the data set. Used to create a
 #' @export
 #' @examples
 #'   \dontrun{d <- read_all_tsv(dir_path = "experiment_name/data/tsv_files/")}
 
-read_all_tsvs <- function(dir_path, tidy = FALSE) {
+read_all_tsvs <- function(dir_path, tidy = FALSE, y_max = 2048) {
   files <- dir(path = dir_path,
                pattern = "*.tsv",
                full.names = T)

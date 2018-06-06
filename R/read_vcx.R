@@ -55,5 +55,6 @@ build_ps_df <- function(df_ps, sub_info, unused_trials) {
                                     prescreen_notes)) %>%
     dplyr::mutate(prescreen_notes = ifelse(is.na(prescreen_notes),
                                     "good_trial",
-                                    prescreen_notes))
+                                    prescreen_notes)) %>%
+    dplyr::rename(ParticipantName = SubjectNum)
 }
