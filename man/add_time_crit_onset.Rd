@@ -23,4 +23,5 @@ based on timing coded in an external timing file.
 }
 \examples{
 \dontrun{d <- add_time_crit_onset(df_et, d_timing, onset_type = "noun")}
+
 }

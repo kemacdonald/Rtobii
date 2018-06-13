@@ -11,11 +11,12 @@
 #' @export
 #' @examples
 #' \dontrun{d <- add_time_crit_onset(df_et, d_timing, onset_type = "noun")}
+#'
 
 add_time_crit_onset <- function(df_et, df_timing, onset_type = "noun") {
   if(onset_type == "noun") {
     onsets <- df_timing %>%
-      dplyr::filter(landmark_type == "noun_on", !is.na(time_ms)) %>%
+      dplyr::filter(landmark_type == "noun_on", !is.na(.data$time_ms)) %>%
       dplyr::select(trial_number, time_ms) %>%
       dplyr::rename(noun_onset = time_ms)
 

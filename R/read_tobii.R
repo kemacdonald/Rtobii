@@ -13,33 +13,17 @@
 #' @param ... Additional arguments, typically used to control the \code{read_tsv() function}.
 #' @export
 #' @examples
-#' \dontrun{d <- read_tobii(file = "187_Habla2_25_Clips.tsv", tidy = TRUE)}
+#' \dontrun{d <- read_tobii(file = "187_Habla2_25_Clips.tsv", tidy = TRUE, y_max = 2048)}
 
 read_tobii <- function(file, tidy = FALSE, y_max = 2048, ...) {
-  d <- readr::read_tsv(file = file, col_types = cols(), ...)
   if (tidy) {
-    d %>%
+    readr::read_tsv(file = file, col_types = readr::cols(.default = "c"), ...) %>%
       clean_tobii_variables(y_max = y_max) %>%
       make_tobii_trials() %>%
-      add_trial_timstamps()
+      add_trial_timestamps()
   } else {
-    d
+    readr::read_tsv(file = file, col_types = readr::cols(.default = "c"), ...)
   }
-}
-
-process_trial_timestamps <- function(trial_df) {
-  trial_df %>%
-    dplyr::arrange(RecordingTimestamp) %>%
-    dplyr::mutate(prev_time_stamp = dplyr::lag(RecordingTimestamp, default = min(RecordingTimestamp)),
-                  time_diff = RecordingTimestamp - prev_time_stamp,
-                  timestamp_trial = cumsum(time_diff)) %>%
-    dplyr::select(-prev_time_stamp, -time_diff)
-}
-
-add_trial_timstamps <- function(df) {
-  df %>%
-    split(.$MediaName, .$ParticipantName) %>%
-    purrr::map_dfr(process_trial_timestamps)
 }
 
 clean_tobii_variables <- function(df, y_max) {
@@ -49,14 +33,37 @@ clean_tobii_variables <- function(df, y_max) {
                   .data$MediaName,
                   .data$RecordingTimestamp,
                   tidyselect::contains("GazePoint")) %>%
-    dplyr::rename(gaze_x = `GazePointX..ADCSpx.`,
-                  gaze_y = `GazePointY..ADCSpx.`) %>%
-    dplyr::mutate(gaze_y_cartesian = y_max - gaze_y)
+    dplyr::mutate(gaze_x = .data$`GazePointX (ADCSpx)` %>% as.numeric(),
+                  gaze_y = .data$`GazePointY (ADCSpx)` %>% as.numeric(),
+                  RecordingTimestamp = as.integer(.data$RecordingTimestamp)) %>%
+    dplyr::mutate(gaze_y_cartesian = y_max - .data$gaze_y) %>%
+    dplyr::select(-.data$`GazePointX (ADCSpx)`, -.data$`GazePointY (ADCSpx)`)
+}
+
+process_trial_timestamps <- function(trial_df) {
+  first_time_step <- min(trial_df$RecordingTimestamp)
+  trial_df %>%
+    dplyr::mutate(prev_time_stamp = dplyr::lag(.data$RecordingTimestamp, default = first_time_step),
+                  time_diff = .data$RecordingTimestamp - .data$prev_time_stamp,
+                  timestamp_trial = cumsum(.data$time_diff)) %>%
+    dplyr::select(-.data$prev_time_stamp, -.data$time_diff)
+}
+
+add_trial_timestamps <- function(df) {
+  df_nest <- df %>%
+    dplyr::group_by(.data$ParticipantName, .data$trial_number) %>%
+    tidyr::nest()
+
+  df_nest <- df_nest %>%
+    dplyr::mutate(trial_timestamp = purrr::map(data, process_trial_timestamps))
+
+  tidyr::unnest(df_nest, trial_timestamp)
 }
 
 make_tobii_trials <- function(df) {
   df %>%
-    dplyr::filter(!is.na(.data$MediaName)) %>%
+    dplyr::filter(!is.na(.data$MediaName),
+                 !(StudioEvent %in% c("MovieStart", "MovieEnd"))) %>%
     dplyr::mutate(MediaName = clean_trial_name(MediaName),
                   trial_number = as.integer(stringr::str_extract(MediaName, "[[:digit:]]+")))
 }

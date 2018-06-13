@@ -40,5 +40,6 @@ compute_onsets_trial <- function(trial_df, fps = 29.97) {
                     into = c("min", "sec", "frames"),
                     sep = ":") %>%
     dplyr::mutate(time_ms = (as.integer(sec) * ms_in_sec) + (as.integer(frames) * fps)) %>%
+    #dplyr::mutate(time_ms = round(time_ms, digits = 0)) %>%
     dplyr::arrange(time_ms)
 }

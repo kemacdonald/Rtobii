@@ -4,18 +4,18 @@
 \alias{plot_fixations}
 \title{Plot Fixations With AOIs for PEEK Tobii Data}
 \usage{
-plot_fixations(et_df, frac_size = 0.05, aois, ...)
+plot_fixations(df_et, frac_size = 0.05, aois_list, ...)
 }
 \arguments{
-\item{et_df}{A data frame of Tobii data, usually created by the \code{read_all_tsvs()} function.}
+\item{df_et}{A data frame of Tobii data, usually created by the \code{read_tobii()} function.}
 
 \item{frac_size}{A double indicating the fraction of rows (fixations) to plot for each participant.
 Useful for controlling how long the plot will take to render.}
 
-\item{aois}{An AOI data frame indicating the AOI coordinates, usually this object is created
-by the \code{read_aois()} function.}
+\item{aois_list}{A named list of AOI coordinates with the structure:
+\code{aois_list <- list(l_xmin=7, l_xmax=396, l_ymin=1749, l_ymax=2044, r_xmin=1289, r_xmax=1685, l_ymin=1751, l_ymax=2044)}}
 
-\item{...}{Additional arguments, typically used to control the \code{read_delim() function}.}
+\item{...}{Additional arguments, typically used to pass along to ggplot.}
 }
 \description{
 \code{plot_fixations()} is a \code{ggplot()}.
@@ -27,5 +27,5 @@ This function allows you to make an exploratory plot of the Tobii .tsv eyetracki
 the AOIs read from the AOI .txt file.
 }
 \examples{
-\dontrun{plot_fixations(tsv_data, frac_size = .05, aois)}
+\dontrun{plot_fixations(df_et, frac_size = .05, aois_list)}
 }
