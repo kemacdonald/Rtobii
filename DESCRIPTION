@@ -19,5 +19,6 @@ Imports:
     ggplot2,
     readr, 
     stringr, 
-    tidyr
+    tidyr,
+    ggthemes
 RoxygenNote: 6.0.1

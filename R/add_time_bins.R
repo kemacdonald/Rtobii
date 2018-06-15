@@ -18,7 +18,7 @@ add_time_bins <- function(df_et) {
   tidyr::unnest(d_nest, trial_time_bins)
 }
 
-# this function takes a trial level data frame and
+# this function takes a data frame of a trial and
 # computes the timebins relative to noun onset
 create_time_bins_trial <- function(df_trial) {
   # split trial into two phases (pre and post noun onset)
@@ -37,10 +37,10 @@ create_time_bins_trial <- function(df_trial) {
     dplyr::mutate(prev_time = dplyr::lag(timestamp_trial_noun_on,
                                          default = min(timestamp_trial_noun_on)),
                   time_diff = timestamp_trial_noun_on - prev_time,
-                  time_bin = case_when(
+                  time_bin = dplyr::case_when(
                     timestamp_trial_noun_on == max(timestamp_trial_noun_on) ~ -17,
                     TRUE ~ -17)) %>%
-    dplyr::filter(time_diff > 10 | time_diff %in% c(0, 16, 17)) %>%
+    dplyr::filter(time_diff > 10 | time_diff %in% c(0, 16, 17)) %>% # this is a little hacky but gets the "good" tobii timestamps
     dplyr::arrange(desc(timestamp_trial_noun_on)) %>%
     dplyr::mutate(time_bin = cumsum(time_bin)) %>%
     dplyr::arrange(time_bin)

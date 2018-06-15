@@ -10,7 +10,7 @@
 #' \dontrun{d <- convert_to_wide(df_et_long)}
 
 convert_to_wide <- function(df_et_long) {
-  df_et_long %>%
-    select(ParticipantName, trial_number, trialonset:noun_onset, response, time_bin, target_looking) %>%
-    spread(time_bin, target_looking)
+  df_wide <- df_et_long %>%
+    dplyr::select(ParticipantName, trial_number, trialonset:noun_onset, response, time_bin, target_looking) %>%
+    tidyr::spread(time_bin, target_looking)
 }

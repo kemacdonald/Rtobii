@@ -13,7 +13,7 @@
 
 code_aoi_looking <- function(df_et, aois_list) {
   df_et %>%
-    mutate(aoi_looking = case_when(
+    mutate(aoi_looking = dplyr::case_when(
       gaze_x >= aois_list$l_xmin & gaze_x <= aois_list$l_xmax & gaze_y_cartesian >= aois_list$l_ymin & gaze_y_cartesian <= aois_list$l_ymax ~ "left",
       gaze_x >= aois_list$r_xmin & gaze_x <= aois_list$r_xmax & gaze_y_cartesian >= aois_list$r_ymin & gaze_y_cartesian <= aois_list$r_ymax ~ "right",
       TRUE ~ "away"

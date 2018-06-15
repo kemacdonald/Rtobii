@@ -19,5 +19,5 @@ identify_responses <- function(df_et) {
     )) %>%
     dplyr::select(ParticipantName, trial_number, response)
 
-  df_et %>% left_join(d_response)
+  df_et %>% dplyr::left_join(d_response)
 }

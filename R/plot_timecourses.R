@@ -19,10 +19,11 @@ plot_timecourses <- function(df_et, n_subs = 3, n_trials = 3) {
 
   df_et %>%
     dplyr::filter(trial_number %in% trials, ParticipantName %in% subs) %>%
-    ggplot2::ggplot(aes(x = time_bin, y = gaze_x, color = as.factor(target_looking))) +
+    ggplot2::ggplot(aes(x = time_bin, y = gaze_x, color = as.factor(aoi_looking))) +
     ggplot2::geom_point() +
-    ggplot2::labs(x = "time bin (ms)", y = "x coordinate", color = "target looking") +
+    ggplot2::labs(x = "time bin (ms)", y = "x coordinate", color = "AOI looking") +
     ggplot2::geom_vline(xintercept = 0, color = "red", lty = "dashed") +
     ggplot2::facet_grid(trial_number~ParticipantName) +
-    ggplot2::theme_bw()
+    ggthemes::theme_base() +
+    theme(legend.position = "top")
 }

@@ -20,8 +20,8 @@ plot_fixations <- function(df_et, frac_size = 0.05, aois_list, ...) {
   df_et %>%
     dplyr::group_by(ParticipantName) %>%
     dplyr::sample_frac(size = frac_size) %>%
-    ggplot2::ggplot(aes(x = gaze_x, y = gaze_y_cartesian)) +
-    ggplot2::labs(x = "x", y = "y") +
+    ggplot2::ggplot(aes(x = gaze_x, y = gaze_y_cartesian, color = as.factor(aoi_looking))) +
+    ggplot2::labs(x = "x", y = "y", color = "AOI looking") +
     ggplot2::geom_point(alpha = 0.3, size = 2) +
     ggplot2::geom_rect(aes(xmin=aois_list$l_xmin, xmax=aois_list$l_xmax,
                            ymin=aois_list$l_ymin, ymax=aois_list$l_ymax),
@@ -29,5 +29,7 @@ plot_fixations <- function(df_et, frac_size = 0.05, aois_list, ...) {
     ggplot2::geom_rect(aes(xmin=aois_list$r_xmin, xmax=aois_list$r_xmax,
                            ymin=aois_list$r_ymin, ymax=aois_list$r_ymax),
                        color="red", fill=NA, size = 1) +
-    ggplot2::facet_wrap(~ParticipantName)
+    ggplot2::facet_wrap(~ParticipantName) +
+    ggthemes::theme_base() +
+    theme(legend.position = "top")
 }

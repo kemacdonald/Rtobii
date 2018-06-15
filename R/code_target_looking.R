@@ -11,7 +11,7 @@
 
 code_target_looking <- function(df_et) {
   df_et %>%
-    mutate(target_looking = case_when(
+    dplyr::mutate(target_looking = case_when(
       aoi_looking == "left" & target_side == "l" ~ 1,
       aoi_looking == "right" & target_side == "r" ~ 1,
       aoi_looking == "away" ~ 0.5,

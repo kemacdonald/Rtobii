@@ -11,6 +11,6 @@
 
 convert_to_long <- function(df_et_wide) {
   df_et_wide %>%
-    gather(key = time_bin, value = target_looking, -ParticipantName:-response) %>%
-    filter(!(is.na(target_looking)))
+    tidyr::gather(key = time_bin, value = target_looking, -ParticipantName:-response) %>%
+    dplyr::filter(!(is.na(target_looking)))
 }

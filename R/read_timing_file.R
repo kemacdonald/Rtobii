@@ -18,12 +18,12 @@
 
 read_timing_file <- function(file, tidy = TRUE, fps = 29.97, ...) {
   if(tidy) {
-    d_timing <- read_delim(file, delim = '\t')
-    names(d_timing) <- names(d_timing) %>% make.names(unique = TRUE)
+    d_timing <- readr::read_delim(file, delim = '\t')
+    names(d_timing) <- base::names(d_timing) %>% base::make.names(unique = TRUE)
     names(d_timing) <- stringr::str_replace(names(d_timing), "[:punct:]", "_") %>% stringr::str_to_lower()
     # # convert 01:02:22 format (minutes, seconds, frames) to milliseconds for each landmark
     d_timing %>%
-      split(.$trial) %>%
+      base::split(.$trial) %>%
       purrr::map_df(compute_onsets_trial) %>%
       dplyr::rename(trial_number = trial)
   } else {
