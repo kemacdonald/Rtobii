@@ -16,8 +16,7 @@ devtools::install_github("kemacdonald/Rtobii")
 
 ## Usage 
 
-The following code snippet shows how to build an iChart using `make_iChart()`. `make_iChart()` is a wrapper function for a sequence of functions that take raw Tobii eyetracking data and converts it to a wide format
-that plays nicely with the Language Learning Lab's RScripts.
+The following code snippet shows how to build an iChart using `make_iChart()`. `make_iChart()` is a wrapper function for a sequence of functions that take raw Tobii eyetracking data and converts it to a wide format that plays nicely with the Language Learning Lab's RScripts.
 
 ```r
 library(Rtobii)
