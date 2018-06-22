@@ -7,7 +7,7 @@ Maintainer: Kyle MacDonald <kylem412@gmail.com>
 Description: The Rtobii package provides a set of utility functions 
     for working with Tobii eyetracking data in R. Most of
     these utility functions are designed specificially for the 
-    Language Learning Lab at Stanford.
+    Language Learning Lab at Stanford University.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
