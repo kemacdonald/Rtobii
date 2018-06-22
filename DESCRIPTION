@@ -20,5 +20,6 @@ Imports:
     readr, 
     stringr, 
     tidyr,
-    ggthemes
+    ggthemes,
+    magrittr
 RoxygenNote: 6.0.1

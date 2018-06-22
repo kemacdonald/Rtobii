@@ -21,6 +21,13 @@ read_order_file <- function(file, tidy = TRUE, ...) {
 
     names(d) <- names(d) %>% make.names(unique = TRUE)
     names(d) <- stringr::str_replace(names(d), "[:punct:]", "_") %>% stringr::str_to_lower()
+
+    # create target_word variable
+    d <- d %>%
+      dplyr::mutate(
+        target_word = ifelse(target_side == "r", right_image, left_image),
+        target_word = stringr::str_remove(target_word, pattern = "[:digit:]"))
+
     d
   } else {
     readr::read_delim(path, delim = '\t', ...)
