@@ -11,7 +11,7 @@
 
 read_vcx <- function(file) {
   xml_data <- xml_to_list(file)
-  # extract unsued trials
+  # extract unused trials
   unused_trials <- xml_data[["dict"]][["dict"]][["array"]] %>% unlist(use.names = F) %>% as.integer()
   # extract all integer-type entries (list of integers), meta info (age in months, subject id)
   integer_list <- xml_data[["dict"]][["dict"]][names(xml_data[["dict"]][["dict"]]) == "integer"]
@@ -45,11 +45,20 @@ get_ps_info <- function(d) {
 
 build_ps_df <- function(df_ps, sub_info, unused_trials) {
   n_trials <- unused_trials %>% max()
-  data.frame(matrix(ncol = 0, nrow = n_trials)) %>%
+  df_final <- data.frame(matrix(ncol = 0, nrow = n_trials)) %>%
     dplyr::mutate(SubjectNum = sub_info$id,
-           age = sub_info$age,
-           trial_number = 1:nrow(.) %>% as.character()) %>%
-    dplyr::left_join(., df_ps, by = "trial_number") %>%
+                  age = sub_info$age,
+                  trial_number = 1:nrow(.) %>% as.character())
+
+  # check if there are prescreened out trials and add to data frame if they exist
+  # this handles the case where there were no trials prescreened out in the vcx file
+  if(nrow(df_ps) != 0) {
+    df_final <- dplyr::left_join(df_final, df_ps, by = "trial_number")
+  } else {
+    df_final <- df_final %>% dplyr::mutate(prescreen_notes = NA)
+  }
+
+  df_final %>%
     dplyr::mutate(prescreen_notes = ifelse(trial_number %in% unused_trials,
                                     "unused_trial",
                                     prescreen_notes)) %>%
